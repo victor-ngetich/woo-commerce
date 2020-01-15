@@ -13,7 +13,21 @@ from django_tables2 import RequestConfig
 def home(request):
 	displays = services.objects.all()
 	banner = services.objects.latest('created_at')
-	return render(request, 'home/app.html',{'displays':displays,'banner':banner},locals())
+	return render(request, 'home/app.html',{'displays':displays,'banner':banner})
+
+def categorized(request):
+	a = request.GET.get('cat', None)
+	print(a)
+	displays = services.objects.all().filter(category__icontains=a)
+	banner = services.objects.latest('created_at')
+	return render(request, 'home/app2.html',{'displays':displays,'banner':banner})
+
+def serv(request):
+	return render(request, 'home/app3.html')
+
+def about(request):
+	return render(request, 'home/app4.html')
+
 def search(request):
 	if request.method=="POST":
 		search_text = request.POST['search_text']

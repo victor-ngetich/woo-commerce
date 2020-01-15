@@ -29,12 +29,12 @@ logout,
 @user_passes_test(lambda u: u.groups.filter(name='Merchant').exists())
 def dashboard(request):
 	now = datetime.datetime.now()
-	inq= len(Inquiries.objects.all().filter(user_id = request.user))
-	inv = len(services.objects.all().filter(user_id = request.user))
-	inquiries = InquiriesTable(Inquiries.objects.all().filter(user_id = request.user).order_by('-created_at'))
+	# inq= len(Inquiries.objects.all().filter(user_id = request.user))
+	# inv = len(services.objects.all().filter(user_id = request.user))
+	inquiries = InquiriesTable(Inquiries.objects.all().order_by('-created_at'))
 	RequestConfig(request, paginate={"per_page": 5}).configure(inquiries)
 
-	return render(request, 'dashboard/index.html',{'now':now,'inquiries':inquiries,'inq':inq,'inv':inv})
+	return render(request, 'dashboard/index.html',{'now':now,'inquiries':inquiries})
 @csrf_protect
 @ensure_csrf_cookie
 @login_required(login_url='/accounts/login/')
@@ -45,6 +45,7 @@ def post(request):
 
 		if form.is_valid():
 			title = form.cleaned_data['Title']
+			category = form.cleaned_data['category']
 			company = form.cleaned_data['company_name']
 			cell = form.cleaned_data['cellphone']
 			email = form.cleaned_data['email']
@@ -53,7 +54,7 @@ def post(request):
 			pay = form.cleaned_data['payment_info']
 
 			for f in request.FILES.getlist("attachment"):
-				services.objects.create(attachment=f,Title=title,email=email,company_name=company,cellphone=cell,location=location,payment_info=pay,description=description,user_id=request.user,created_at=timezone.now())
+				services.objects.create(attachment=f,Title=title, category=category, email=email,company_name=company,cellphone=cell,location=location,payment_info=pay,description=description,user_id=request.user,created_at=timezone.now())
 			return HttpResponseRedirect('/inventory/')
 			messages.info(request, 'Your product was posted successfully.')
 		else:
@@ -110,3 +111,6 @@ def delete(request):
 		item = Inquiries.objects.get(order_number=item_id)
 		item.delete()
 		return render_to_response('dashboard/index.html', {'form':form, 'inquiry':inquiry}, RequestContext(request))
+
+def search(request):
+	pass

@@ -1,5 +1,7 @@
 {% extends 'accounts/loginbase.html' %}
 {% block content %}
+
+{% load static %}
 	
 	<style type="text/css">
 	.radii{
@@ -9,16 +11,18 @@
 	
 	<div class="container">
 
-<div class="featured-post-wrapper" style="margin:100px 0px;">
+<div class="featured-post-wrapper" style="margin:5px 0px;">
                             
-                            <div class="featured-post-text-wrapper">
+                            <div class="featured-post-text-wrapper" style="background-image: url({% static "images/005.jpg" %}?{% now "U" %});">
 
-		<div class="row" style="margin-top:100px;">
-			<div class="col-md-4 col-md-offset-4"></div>
-			<div class="col-md-4 col-md-offset-4">
+		<div class="row" style="margin-top:25px;">
+			<div class="col-md-3 col-md-offset-4"></div>
+			<div class="col-md-6 col-md-offset-4">
 				<div class="login-panel panel panel-default">
+						<strong>
 					<div class="panel-heading">
-						<center><h3 class="panel-title">Please create your account here </h3></center>
+	
+						<center><h3 class="panel-title">Get started with your service provider account here </h3></center>
 					</div>
 					<div class="panel-body">
 						<form method="post" action="/register/">{% csrf_token %}
@@ -26,25 +30,26 @@
 								<table class="radii">
 									<tbody>
 									{% csrf_token %}
-									{{form.as_table}}
+									{{form.as_p}}
 
 									</tbody>
 								</table>
 							</p>	
 							<p class="bs-component">
 								<center>
-									<input class="btn btn-success btn-sm btn-block" type="Submit" value="submit"/>
+									<input class="btn btn-success btn-sm btn-block" type="Submit" value="Submit"/>
 								</center>
 							</p>
 							<input type="hidden" name="next" value="{{ next }}"/>
 
 						</form>
 						<div class="text-center">
-          <a class="d-block small mt-3" href="/password_reset/">Forgot your password?</a><br>
+          <a class="d-block mt-3" href="/password_reset/">Forgot your password?</a><br>
           
-          <a class="d-block small" href="/accounts/login/">Login here</a>
+          <a class="d-block" href="/accounts/login/">Login here</a>
         </div>
 					</div>
+				</strong>
 				</div>
 			</div>
 

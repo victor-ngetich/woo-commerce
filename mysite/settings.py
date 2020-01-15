@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'accounts',
     'dashboard',
     'django_tables2',
-    'bootstrap4_datetime',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,15 +78,15 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'wooservices',
-        'USER': 'root',
-        'PASSWORD': 'hourglass84',
+        'USER': 'postgres',
+        'PASSWORD': 'matte',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-        'OPTIONS': {
-        'autocommit': True,
-    },
+        'PORT': '5432',
+    #     'OPTIONS': {
+    #     'autocommit': True,
+    # },
     }
 }
 
@@ -126,8 +125,8 @@ USE_TZ = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'muriithiken0@gmail.com'
-EMAIL_HOST_PASSWORD = '#kenmuriithi083$'
+EMAIL_HOST_USER = 'kenyanthrill@gmail.com'
+EMAIL_HOST_PASSWORD = 'lookalive'
 EMAIL_PORT = 587
 ACCOUNT_ACTIVATION_DAYS = 2
 

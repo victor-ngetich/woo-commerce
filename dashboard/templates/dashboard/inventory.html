@@ -1,7 +1,7 @@
 {% extends 'dashboard/index.html' %}
 {% block content %}
 
-{% load staticfiles %}
+{% load static %}
 
 {% load render_table from django_tables2 %}
 
@@ -17,9 +17,9 @@
 {% endif %}
         <div class="card-body">
           <div class="table-responsive">
-            <label>Search:</label>
+            <!-- <label>Search:</label>
             {% csrf_token %}
-            <input type="text" id="search" name="search" placeholder="search by title">
+            <input type="text" id="search" name="search" placeholder="search by title"> -->
                       
             <ul id="search-results">
               
@@ -29,7 +29,7 @@
                 <tr><td>
                     <form action="#" method="post">{% csrf_token%}
                       <input type="hidden" name="item_id"  value="{{item.id}}" />
-             <input type="submit" class="btn btn-success navbar-btn" style="float: right;" value="Delete">
+             <!-- <input type="submit" class="btn btn-success navbar-btn" style="float: right;" value="Delete"> -->
                     </form>
               </td></tr>
                <tr><td>

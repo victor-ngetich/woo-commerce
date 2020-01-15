@@ -3,8 +3,32 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from dashboard.models import services,Inquiries,payment
 
+MAYBECHOICE2 = (
+    ('Advertising','Advertising'),
+    ('Automotive','Automotive'),
+	('Beauty','Beauty'),
+    ('Car Rental','Car Rental'),
+	('Catering','Catering'),
+    ('Cleaning','Cleaning'),
+	('Computer & IT','Computer & IT'),
+    ('Event Planning','Event Planning'),
+	('Fitness','Fitness'),
+    ('Interior Design','Interior Design'),
+	('Logistics','Logistics'),
+    ('Massage Therapy','Massage Therapy'),
+	('Pet','Pet'),
+    ('Photography & Video','Photography & Video'),
+	('Real Estate','Real Estate'),
+    ('Renovation','Renovation'),
+	('Repair','Repair'),
+    ('Travel Agencies','Travel Agencies'),
+	('Web Design','Web Design'),
+    ('Wedding','Wedding'),
+	('Others','Others'),
+   )
 class ServiceForm(forms.ModelForm):
 	Title = forms.CharField(label='Service Name:',max_length=200,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
+	category = forms.ChoiceField(required=True, choices=MAYBECHOICE2, widget=forms.Select(attrs={'class':'form-control','name':'group', 'size':1}))
 	company_name = forms.CharField(label='Company Name:',max_length=200,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
 	cellphone=forms.IntegerField(label="Cellphone:",required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
 	email = forms.CharField(label="Your email:", required = True,max_length=70,widget=forms.TextInput(attrs={'multiple':True,'class':'form-control','name':'email'}))
@@ -16,7 +40,7 @@ class ServiceForm(forms.ModelForm):
 
 	class Meta:
 		model = services
-		fields = ('Title','company_name','attachment','email','location','cellphone','payment_info','description')
+		fields = ('Title', 'category','company_name','attachment','email','location','cellphone','payment_info','description')
 
 	def clean_cellphone(self):
 		cellphone = self.cleaned_data.get("cellphone")
@@ -40,8 +64,8 @@ class InquiriesForm(forms.ModelForm):
 	client_name = forms.CharField(label='Your Name:',max_length=200,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
 	cellphone=forms.CharField(label="Cellphone:",required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
 	client_email = forms.CharField(label="Your email:", required = True,max_length=70,widget=forms.TextInput(attrs={'multiple':True,'class':'form-control','name':'email'}))
-	message = forms.CharField(label="Your message?:", required=True,max_length=250,widget=forms.Textarea(attrs={'class':'form-control','name':'message','rows':'6'}))
-	transaction_code = forms.CharField(label="Transaction code:",help_text="Pay the fee to paybill number 914226 ,then enter the transaction code you received here." ,required =True,max_length=200,widget=forms.TextInput(attrs={'class':'form-control','name':'Transaction_code'}))
+	message = forms.CharField(label="Your message:", required=True,max_length=250,widget=forms.Textarea(attrs={'class':'form-control','name':'message','rows':'6'}))
+	transaction_code = forms.CharField(label="Transaction code:",help_text="Pay the fee to appropriate paybill, then enter the transaction code you received here." ,required =True,max_length=200,widget=forms.TextInput(attrs={'class':'form-control','name':'Transaction_code'}))
 	booked_time = forms.DateTimeField(label='Schedule a date:',required=True,widget=DateInput(attrs={'class':'form-control'}))
 	
 	class Meta:
@@ -50,8 +74,8 @@ class InquiriesForm(forms.ModelForm):
 
 	def clean(self,*args,**kwargs):
 		trans = self.cleaned_data.get("transaction_code")
-		if not payment.objects.all().filter(payment_id__iexact=trans):
-			raise forms.ValidationError("Sorry ,the transaction code you provided is invalid!")
+		# if not payment.objects.all().filter(payment_id__iexact=trans):
+		# 	raise forms.ValidationError("Sorry, the transaction code you provided is invalid!")
 		return super(InquiriesForm,self).clean(*args,**kwargs)
 
 

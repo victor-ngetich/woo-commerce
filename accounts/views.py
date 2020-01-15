@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template.context_processors import csrf
 from django.contrib.auth.decorators import login_required
@@ -60,21 +59,21 @@ def register_view(request):
 			user = (form.save(commit=False))
 			user.is_active = False
 			user.save()
-			group = form.cleaned_data.get('group')
-			user.groups.add(group)
+			# group = form.cleaned_data.get('group')
+			# user.groups.add(group)
 			current_site = get_current_site(request)
-			message = render_to_string('accounts/activate-email.html',{
-			'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-            'token': account_activation_token.make_token(user),
-            })
-			mail_subject = 'Activate your freelance account.'
-			to_email = form.cleaned_data.get('email')
-			email = EmailMessage(mail_subject,message, to=[to_email])
-			email.send()
+			# message = render_to_string('accounts/activate-email.html',{
+			# 'user': user,
+            # 'domain': current_site.domain,
+            # # 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+            # 'token': account_activation_token.make_token(user),
+            # })
+			# mail_subject = 'Activate your freelance account.'
+			# to_email = form.cleaned_data.get('email')
+			# email = EmailMessage(mail_subject,message, to=[to_email])
+			# email.send()
 			return redirect('/success/')
-			return HttpResponse('Please confirm your email address to complete the registration')
+			# return HttpResponse('Please confirm your email address to complete the registration')
 		else:
 			return render(request,'accounts/sign.html',{"form":form})
 
@@ -105,8 +104,8 @@ def activate(request, uidb64, token):
     	return render(request,'accounts/invalid.html')
 @csrf_protect
 def logout_page(request):
-	user = User.objects.get(username='username')
-	[s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.id]
+	# user = User.objects.get(username='username')
+	# [s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == user.id]
 	logout(request,user)
 	return HttpResponseRedirect('/accounts/login/')
 @csrf_protect
